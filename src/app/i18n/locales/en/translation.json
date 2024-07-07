@@ -1,0 +1,26 @@
+{
+  "emergency_unlock": {
+    "description_for_keyholder": "Let your wearers buy emergency keys or use a safeword to unlock themselves in case of emergency.",
+    "description_for_wearer": "You can buy emergency keys or use a safeword to unlock yourself in case of emergency.",
+    "emergency_unlock_method": "Emergency unlock method",
+    "choose_method_description_for_keyholder": "Choose the unlock methods you want to offer your wearer. When the session starts, your wearer will be able to choose one of the activated methods.",
+    "choose_method_description_for_wearer": "Choose the unlock method you want to use in case of emergency.",
+    "emergency_key": "Emergency key",
+    "emergency_key_item_description_for_keyholder": "Your wearer can buy emergency keys to unlock themself in case of emergency.",
+    "emergency_key_item_description_for_wearer": "Use emergency keys to unlock yourself in case of emergency.",
+    "emergency_keys": "Emergency keys",
+    "emergency_keys_description_for_keyholder": "In case of emergency, your wearer can buy keys to end their session and get their combination immediately.",
+    "emergency_keys_description_for_wearer": "In case of emergency, you can buy keys to end your session and get your combination immediately.",
+    "safeword": "Safeword",
+    "safeword_description_for_keyholder": "Configure a safeword that your wearer can use at any time to end their session and get their combination immediately.",
+    "safeword_description_for_wearer": "Configure a safeword that you can use at any time to end your session and get your combination immediately.",
+    "emergency_key_configuration": "Emergency key configuration",
+    "emergency_key_configuration_description": "Configure the number of keys required for unlocking.",
+    "let_wearer_choose_number_of_keys": "Let your wearer choose the number of keys when the session starts",
+    "let_wearer_choose_number_of_keys_description": "Recommended if your lock is public.",
+    "select_number_of_keys": "Select the number of required keys",
+    "select_number_of_keys_description": "You can choose this option if you know your wearer.",
+    "number_of_keys_required_to_unlock": "Number of keys required to unlock",
+    "total_emergency_keys_required_to_unlock": "Total emergency keys required to unlock: {{number_of_keys}} ({{price}})"
+  }
+}

@@ -1,0 +1,24 @@
+.DurationSelectorItem .duration-digits {
+  display: flex;
+}
+
+.DurationSelectorItem .duration-digits .duration-digit {
+  flex-grow: 1;
+  height: 40px;
+  width: 24px;
+  border-radius: 10px;
+  background-color: #4d4a5e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.DurationSelectorItem .duration-label {
+  text-align: center;
+  color: #a4a7b7;
+  font-size: 0.9rem;
+  margin-top: 0.25em;
+}

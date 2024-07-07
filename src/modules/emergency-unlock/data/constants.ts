@@ -1,0 +1,1 @@
+export const EMERGENCY_KEY_PRICE = 500

@@ -1,0 +1,27 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "semi": false,
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^constants/(.*)$",
+    "^shared/(.*)$",
+    "^modules/(.*)/models/(.*)$",
+    "^modules/(.*)$",
+    "^./src(.*)$",
+    "^[./]"
+  ],
+  "importOrderParserPlugins": [
+    "typescript",
+    "[\"decorators-legacy\", {\"decoratorsBeforeExport\": true}]"
+  ],
+  "overrides": [
+    {
+      "files": "*.hbs",
+      "options": {
+        "parser": "html",
+        "singleQuote": false
+      }
+    }
+  ]
+}

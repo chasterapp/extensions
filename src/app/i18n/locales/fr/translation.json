@@ -1,0 +1,26 @@
+{
+  "emergency_unlock": {
+    "description_for_keyholder": "Laissez vos porteurs acheter des clés d'urgence ou utiliser un safeword pour se déverrouiller en cas d'urgence.",
+    "description_for_wearer": "Vous pouvez acheter des clés d'urgence ou utiliser un safeword pour vous déverrouiller en cas d'urgence.",
+    "emergency_unlock_method": "Méthode de déverrouillage d'urgence",
+    "choose_method_description_for_keyholder": "Choisissez les méthodes de déverrouillage que vous souhaitez offrir à votre porteur. Lorsque la session démarre, votre porteur pourra choisir l'une des méthodes activées.",
+    "choose_method_description_for_wearer": "Choisissez la méthode de déverrouillage que vous souhaitez utiliser en cas d'urgence.",
+    "emergency_key": "Clé d'urgence",
+    "emergency_key_item_description_for_keyholder": "Votre porteur peut acheter des clés d'urgence pour se déverrouiller en cas d'urgence.",
+    "emergency_key_item_description_for_wearer": "Utilisez des clés d'urgence pour vous déverrouiller en cas d'urgence.",
+    "emergency_keys": "Clés d'urgence",
+    "emergency_keys_description_for_keyholder": "En cas d'urgence, votre porteur peut acheter des clés pour mettre fin à sa session et obtenir immédiatement sa combinaison.",
+    "emergency_keys_description_for_wearer": "En cas d'urgence, vous pouvez acheter des clés pour mettre fin à votre session et obtenir immédiatement votre combinaison.",
+    "safeword": "Safeword",
+    "safeword_description_for_keyholder": "Configurez un safeword que votre porteur peut utiliser à tout moment pour mettre fin à sa session et obtenir immédiatement sa combinaison.",
+    "safeword_description_for_wearer": "Configurez un safeword que vous pouvez utiliser à tout moment pour mettre fin à votre session et obtenir immédiatement votre combinaison.",
+    "emergency_key_configuration": "Configuration de la clé d'urgence",
+    "emergency_key_configuration_description": "Configurez le nombre de clés nécessaires pour le déverrouillage.",
+    "let_wearer_choose_number_of_keys": "Laissez votre porteur choisir le nombre de clés au démarrage de la session",
+    "let_wearer_choose_number_of_keys_description": "Recommandé si votre cadenas est public.",
+    "select_number_of_keys": "Sélectionnez le nombre de clés requis",
+    "select_number_of_keys_description": "Vous pouvez choisir cette option si vous connaissez votre porteur.",
+    "number_of_keys_required_to_unlock": "Nombre de clés nécessaires pour déverrouiller",
+    "total_emergency_keys_required_to_unlock": "Nombre total de clés d'urgence nécessaires pour déverrouiller : {{number_of_keys}} ({{price}})"
+  }
+}
