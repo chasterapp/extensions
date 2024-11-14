@@ -1,11 +1,12 @@
-import EmergencyKeyConfiguration from '@/modules/emergency-unlock/components/configuration/unlock-methods/EmergencyKeyConfiguration'
-import SafewordConfiguration from '@/modules/emergency-unlock/components/configuration/unlock-methods/SafewordConfiguration'
-import type { EmergencyUnlockConfiguration } from '@/modules/emergency-unlock/models/emergency-unlock-configuration'
+import EmergencyKeyConfiguration from '@/modules/emergency-unlock/components/configuration/unlock-methods/emergencyUnlock/EmergencyKeyConfiguration'
+import SafewordConfiguration from '@/modules/emergency-unlock/components/configuration/unlock-methods/safeword/SafewordConfiguration'
+import { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
+import { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
 import type { UseFormReturn } from 'react-hook-form'
 
 type Props = {
-  form: UseFormReturn<EmergencyUnlockConfiguration>
-  role: 'keyholder' | 'wearer'
+  form: UseFormReturn<EmergencyUnlockConfigurationForm>
+  role: PartnerConfigurationRoleEnum
 }
 
 const UnlockMethodConfiguration = ({ form, role }: Props) => {
@@ -13,10 +14,10 @@ const UnlockMethodConfiguration = ({ form, role }: Props) => {
 
   return (
     <>
-      {watch('emergencyKey.allowed') && (
+      {watch('emergencyKeyAllowed') && (
         <EmergencyKeyConfiguration form={form} role={role} />
       )}
-      {watch('safeword.allowed') && (
+      {watch('safewordAllowed') && (
         <SafewordConfiguration form={form} role={role} />
       )}
     </>

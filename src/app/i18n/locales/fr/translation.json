@@ -21,6 +21,15 @@
     "select_number_of_keys": "Sélectionnez le nombre de clés requis",
     "select_number_of_keys_description": "Vous pouvez choisir cette option si vous connaissez votre porteur.",
     "number_of_keys_required_to_unlock": "Nombre de clés nécessaires pour déverrouiller",
-    "total_emergency_keys_required_to_unlock": "Nombre total de clés d'urgence nécessaires pour déverrouiller : {{number_of_keys}} ({{price}})"
+    "total_emergency_keys_required_to_unlock": "Nombre total de clés d'urgence nécessaires pour déverrouiller : {{number_of_keys}} ({{price}})",
+    "safeword_configuration": "Configuration du safeword",
+    "safeword_configuration_description": "Configurez un safeword que votre porteur peut utiliser à tout moment pour mettre fin à sa session et obtenir immédiatement sa combinaison.",
+    "let_wearer_choose_safeword": "Laissez votre porteur choisir le safeword au démarrage de la session",
+    "let_wearer_choose_safeword_description": "Recommandé si votre cadenas est public.",
+    "enter_the_safeword": "Entrez le safeword",
+    "enter_the_safeword_description": "Le safeword sera affiché à la portée lors du démarrage de la session.",
+    "disclaimer_alert_for_keyholder": "Le déverrouillage d'urgence n'est pas un remplacement de la methode de déverrouillage d'urgence de votre porteur. Votre porteur est responsable de sa sécurité en cas d'urgence.",
+    "disclaimer_alert_for_wearer": "Le déverrouillage d'urgence n'est pas un remplacement de votre propre methode de déverrouillage. Vous êtes responsable de votre propre sécurité en cas d'urgence.",
+    "learn_how_to_secure_your_keys": "Apprenez comment sécuriser vos clés."
   }
 }

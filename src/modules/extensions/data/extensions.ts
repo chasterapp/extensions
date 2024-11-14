@@ -1,12 +1,12 @@
 import { cardConfigurationSchema } from '@/modules/cards/models/card-configuration'
+import { emergencyUnlockConfigurationSchema } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
 import type { Extension } from '@/modules/extensions/types/Extension'
-import { z } from 'zod'
 
 export const extensions: Extension[] = [
   {
     internalId: 'emergency-unlock',
     displayName: 'Emergency unlock',
-    configurationSchema: z.any(),
+    configurationSchema: emergencyUnlockConfigurationSchema,
   },
   {
     internalId: 'cards',
@@ -16,7 +16,7 @@ export const extensions: Extension[] = [
 ]
 
 export const extensionBySlug = (slug: string) => {
-  if (slug === 'cards-1') {
+  if (slug === 'cards') {
     return extensions[1]
   }
   if (slug === 'emergency-unlock') {

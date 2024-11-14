@@ -21,6 +21,15 @@
     "select_number_of_keys": "Select the number of required keys",
     "select_number_of_keys_description": "You can choose this option if you know your wearer.",
     "number_of_keys_required_to_unlock": "Number of keys required to unlock",
-    "total_emergency_keys_required_to_unlock": "Total emergency keys required to unlock: {{number_of_keys}} ({{price}})"
+    "total_emergency_keys_required_to_unlock": "Total emergency keys required to unlock: {{number_of_keys}} ({{price}})",
+    "safeword_configuration": "Safeword configuration",
+    "safeword_configuration_description": "Configure a safeword that you can use at any time to end your session and get your combination immediately.",
+    "let_wearer_choose_safeword": "Let the wearer choose the safeword when the session starts",
+    "let_wearer_choose_safeword_description": "Recommended if your lock is public.",
+    "enter_the_safeword": "Enter the safeword",
+    "enter_the_safeword_description": "The safeword will be displayed to the wearer when the session starts.",
+    "disclaimer_alert_for_keyholder": "Emergency unlock is not a substitute for your wearer's own emergency unlock method. Your wearer is responsible for their safety in case of an emergency.",
+    "disclaimer_alert_for_wearer": "Emergency unlock is not a substitute for your own emergency unlock method. You are responsible for your safety in case of an emergency.",
+    "learn_how_to_secure_your_keys": "Learn how to secure your keys."
   }
 }

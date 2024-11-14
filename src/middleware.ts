@@ -1,7 +1,7 @@
+import acceptLanguage from 'accept-language'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import acceptLanguage from 'accept-language'
-import { fallbackLng, languages, cookieName } from './app/i18n/settings'
+import { cookieName, fallbackLng, languages } from './app/i18n/settings'
 
 acceptLanguage.languages(languages)
 
@@ -15,7 +15,6 @@ export function middleware(req: NextRequest) {
   let lng
   if (!lng) lng = acceptLanguage.get(req.headers.get('Accept-Language'))
   if (!lng) lng = fallbackLng
-  console.log('middleware', lng)
 
   if (!req.nextUrl.pathname.startsWith('/_next')) {
     const response = NextResponse.next()

@@ -1,24 +1,43 @@
 import { useTranslation } from '@/app/i18n/client'
 import UnlockMethodChoice from '@/modules/emergency-unlock/components/configuration/UnlockMethodChoice'
 import UnlockMethodConfiguration from '@/modules/emergency-unlock/components/configuration/unlock-methods/UnlockMethodConfiguration'
-import type { EmergencyUnlockConfiguration } from '@/modules/emergency-unlock/models/emergency-unlock-configuration'
+import {
+  configurationToForm,
+  formToConfiguration,
+  parseConfiguration,
+} from '@/modules/emergency-unlock/models/emergencyUnlockConfiguration'
+import type { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
 import type { PartnerConfigurationForPublic } from '@chasterapp/chaster-js'
 import { Divider, Stack, Typography } from '@mui/joy'
 import { useForm } from 'react-hook-form'
+import DisclaimerAlert from './DisclaimerAlert'
+import { useSaveCapability } from '@/modules/base/hooks/useSaveCapability'
+import { updateConfiguration } from '@/modules/cards/actions/updateConfiguration'
 
 type Props = {
   partnerConfiguration: PartnerConfigurationForPublic
+  token: string
 }
 
-const Configuration = ({ partnerConfiguration }: Props) => {
+const Configuration = ({ partnerConfiguration, token }: Props) => {
   const { t } = useTranslation()
+  const role = partnerConfiguration.role
+  const form = useForm<EmergencyUnlockConfigurationForm>({
+    defaultValues: configurationToForm(
+      parseConfiguration(partnerConfiguration.config),
+    ),
+  })
 
-  const role = (
-    partnerConfiguration as unknown as { role: 'wearer' | 'keyholder' }
-  ).role
+  useSaveCapability({
+    onSave: async () => {
+      const configuration = formToConfiguration({
+        form: form.getValues(),
+        role,
+      })
+      console.log(JSON.stringify(configuration))
 
-  const form = useForm<EmergencyUnlockConfiguration>({
-    defaultValues: partnerConfiguration.config as EmergencyUnlockConfiguration,
+      await updateConfiguration({ token, configuration })
+    },
   })
 
   return (
@@ -31,6 +50,8 @@ const Configuration = ({ partnerConfiguration }: Props) => {
       <Divider />
       <UnlockMethodChoice role={role} form={form} />
       <UnlockMethodConfiguration role={role} form={form} />
+      <Divider />
+      <DisclaimerAlert role={role} />
     </Stack>
   )
 }

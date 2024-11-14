@@ -8,8 +8,8 @@ type Props = {
   token: string
 }
 
-const EmergencyUnlockConfigurationView = ({ configuration }: Props) => {
-  return <Configuration partnerConfiguration={configuration} />
+const EmergencyUnlockConfigurationView = ({ configuration, token }: Props) => {
+  return <Configuration partnerConfiguration={configuration} token={token} />
 }
 
 export default EmergencyUnlockConfigurationView

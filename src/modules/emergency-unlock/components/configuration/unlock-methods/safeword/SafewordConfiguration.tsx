@@ -1,6 +1,4 @@
-import EmergencyKeyItemCard from '@/modules/emergency-unlock/components/configuration/EmergencyKeyItemCard'
-import SelectNumberOfRequiredKeys from '@/modules/emergency-unlock/components/configuration/unlock-methods/SelectNumberOfRequiredKeys'
-import type { EmergencyUnlockConfiguration } from '@/modules/emergency-unlock/models/emergency-unlock-configuration'
+import { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
 import FormRadioGroup from '@/modules/ui/components/inputs/FormRadioGroup'
 import {
   Divider,
@@ -13,13 +11,16 @@ import {
 import { useId } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import SafewordInput from './SafewordInput'
+import { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
+import { userCanSeeSafewordInput } from '@/modules/emergency-unlock/models/emergencyUnlockConfiguration'
 
 type Props = {
-  form: UseFormReturn<EmergencyUnlockConfiguration>
-  role: 'keyholder' | 'wearer'
+  form: UseFormReturn<EmergencyUnlockConfigurationForm>
+  role: PartnerConfigurationRoleEnum
 }
 
-const EmergencyKeyConfiguration = ({ role, form }: Props) => {
+const SafewordConfiguration = ({ role, form }: Props) => {
   const { t } = useTranslation()
   const { control } = form
   const id = useId()
@@ -29,49 +30,48 @@ const EmergencyKeyConfiguration = ({ role, form }: Props) => {
     <>
       <Divider />
       <Typography component="h2" level="title-lg">
-        {t('emergency_unlock.emergency_keys')}
+        {t('emergency_unlock.safeword')}
       </Typography>
-      <EmergencyKeyItemCard role={role} />
       <Stack gap={0.5}>
         <Typography component="h3" level="title-md" id={id}>
-          {t('emergency_unlock.emergency_key_configuration')}
+          {t('emergency_unlock.safeword_configuration')}
         </Typography>
         <Typography id={descriptionId}>
-          {t('emergency_unlock.emergency_key_configuration_description')}
+          {t('emergency_unlock.safeword_configuration_description')}
         </Typography>
       </Stack>
       <FormRadioGroup
         control={control}
-        name="emergencyKey.wearerCanChooseNbRequiredKeys"
+        name="wearerCanChooseSafeword"
         aria-labelledby={id}
         aria-describedby={descriptionId}
       >
         <Stack gap={1}>
           <FormControl>
             <Radio
+              overlay
               value={true}
-              label={t('emergency_unlock.let_wearer_choose_number_of_keys')}
+              label={t('emergency_unlock.let_wearer_choose_safeword')}
             />
             <FormHelperText>
-              {t(
-                'emergency_unlock.let_wearer_choose_number_of_keys_description',
-              )}
+              {t('emergency_unlock.let_wearer_choose_safeword_description')}
             </FormHelperText>
           </FormControl>
           <FormControl>
             <Radio
+              overlay
               value={false}
-              label={t('emergency_unlock.select_number_of_keys')}
+              label={t('emergency_unlock.enter_the_safeword')}
             />
             <FormHelperText>
-              {t('emergency_unlock.select_number_of_keys_description')}
+              {t('emergency_unlock.enter_the_safeword_description')}
             </FormHelperText>
           </FormControl>
         </Stack>
       </FormRadioGroup>
-      <SelectNumberOfRequiredKeys form={form} role={role} />
+      <SafewordInput form={form} role={role} />
     </>
   )
 }
 
-export default EmergencyKeyConfiguration
+export default SafewordConfiguration

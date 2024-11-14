@@ -1,4 +1,3 @@
-import type { EmergencyUnlockConfiguration } from '@/modules/emergency-unlock/models/emergency-unlock-configuration'
 import FormCheckbox from '@/modules/ui/components/inputs/FormCheckbox'
 import {
   FormControl,
@@ -11,10 +10,12 @@ import {
 import { t } from 'i18next'
 import { useId } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
+import { EmergencyUnlockConfigurationForm } from '../../types/emergencyUnlockConfiguration'
+import { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
 
 type Props = {
-  form: UseFormReturn<EmergencyUnlockConfiguration>
-  role: 'keyholder' | 'wearer'
+  form: UseFormReturn<EmergencyUnlockConfigurationForm>
+  role: PartnerConfigurationRoleEnum
 }
 
 const ForKeyholder = ({ form: { control } }: Pick<Props, 'form'>) => {
@@ -28,7 +29,7 @@ const ForKeyholder = ({ form: { control } }: Pick<Props, 'form'>) => {
           {t('emergency_unlock.emergency_unlock_method')}
         </Typography>
         <Typography id={descriptionId}>
-          {t('emergency_unlock.choose_method_description_for_wearer')}
+          {t('emergency_unlock.choose_method_description_for_keyholder')}
         </Typography>
       </Stack>
       <Stack
@@ -39,8 +40,9 @@ const ForKeyholder = ({ form: { control } }: Pick<Props, 'form'>) => {
       >
         <FormControl>
           <FormCheckbox
+            overlay
             control={control}
-            name="emergencyKey.allowed"
+            name="emergencyKeyAllowed"
             label={t('emergency_unlock.emergency_keys')}
           />
           <FormHelperText>
@@ -49,8 +51,9 @@ const ForKeyholder = ({ form: { control } }: Pick<Props, 'form'>) => {
         </FormControl>
         <FormControl>
           <FormCheckbox
+            overlay
             control={control}
-            name="safeword.allowed"
+            name="safewordAllowed"
             label={t('emergency_unlock.safeword')}
           />
           <FormHelperText>
@@ -79,18 +82,19 @@ const ForWearer = ({ form: { setValue, watch } }: Pick<Props, 'form'>) => {
       <RadioGroup
         onChange={(event) => {
           setValue(
-            'emergencyKey.allowed',
+            'emergencyKeyAllowed',
             event.currentTarget.value === 'emergency_key',
           )
-          setValue('safeword.allowed', event.currentTarget.value === 'safeword')
+          setValue('safewordAllowed', event.currentTarget.value === 'safeword')
         }}
-        value={watch('emergencyKey.allowed') ? 'emergency_key' : 'safeword'}
+        value={watch('emergencyKeyAllowed') ? 'emergency_key' : 'safeword'}
         aria-labelledby={id}
         aria-describedby={descriptionId}
       >
         <Stack gap={1}>
           <FormControl>
             <Radio
+              overlay
               value="emergency_key"
               label={t('emergency_unlock.emergency_keys')}
             />
@@ -99,7 +103,11 @@ const ForWearer = ({ form: { setValue, watch } }: Pick<Props, 'form'>) => {
             </FormHelperText>
           </FormControl>
           <FormControl>
-            <Radio value="safeword" label={t('emergency_unlock.safeword')} />
+            <Radio
+              overlay
+              value="safeword"
+              label={t('emergency_unlock.safeword')}
+            />
             <FormHelperText>
               {t('emergency_unlock.safeword_description_for_wearer')}
             </FormHelperText>
