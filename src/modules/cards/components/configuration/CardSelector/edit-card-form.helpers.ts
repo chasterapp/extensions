@@ -1,23 +1,23 @@
-import { CardTypeInDeck, GameCreationInitialCard } from "@chaster/api-client"
-import { CardsFormValue } from "./edit-card-form.model"
+import type { CardConfigurationInitialCard } from '@/modules/cards/models/card-configuration'
+import type { CardsFormValue } from './edit-card-form.model'
 
-export const editDeckInitialForm = (
-  deck: Pick<CardTypeInDeck, "type" | "count">[],
-): CardsFormValue => {
-  const form: CardsFormValue = {}
+// export const editDeckInitialForm = (
+//   deck: Pick<CardTypeInDeck, 'type' | 'count'>[],
+// ): CardsFormValue => {
+//   const form: CardsFormValue = {}
 
-  deck.forEach((card) => {
-    form[card.type] = {
-      selected: true,
-      min: card.count,
-      max: card.count,
-    }
-  })
+//   deck.forEach((card) => {
+//     form[card.type] = {
+//       selected: true,
+//       min: card.count,
+//       max: card.count,
+//     }
+//   })
 
-  return form
-}
+//   return form
+// }
 
-export const createDeckInitialForm = (cards: GameCreationInitialCard[]) =>
+export const createDeckInitialForm = (cards: CardConfigurationInitialCard[]) =>
   cards.reduce((acc, val) => {
     acc[val.type] = {
       selected: true,

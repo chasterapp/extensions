@@ -1,28 +1,29 @@
 import dayjs from 'dayjs'
-import MockDate from 'mockdate'
-import { CardDeckBuilder } from 'modules/card-core/models/card/card-deck-builder'
-import { lockDataFactory } from 'modules/card-core/factories/lock/lock-data.factory'
-import { lockParamsFactory } from 'modules/card-core/factories/lock/lock-params.factory'
-import { cardDatabaseServiceForTests } from 'modules/card-database/tests/data/card-database-for-tests'
-import { randomMockServiceForTests } from 'modules/random/tests/data/random-mock-for-tests'
-import { CardLock } from './card-game-state'
 import { RegularityMode } from './regularity-mode'
-import type { LockOptions } from './lock-options'
+import { CardDeckBuilder } from './card-deck-builder'
+import type { CardGameStateParams } from './card-game-state'
+import { CardGameState } from './card-game-state'
+import { randomWeighted } from '@/modules/base/lib/random'
+import { cardConfigurationFactory } from '../factories/card-configuration.factory'
+import { cardGameDataFactory } from '../factories/lock-data.factory'
 
-describe('Lock', () => {
+jest.mock('@/modules/base/lib/random')
+
+const randomWeightedMock = randomWeighted as jest.Mock
+
+describe('CardGameState', () => {
   const date = new Date('2021-11-01T08:00:00Z')
 
-  let lock: CardLock
-  const cardDeckBuilder = new CardDeckBuilder(cardDatabaseServiceForTests)
+  let lock: CardGameState
+  const cardDeckBuilder = new CardDeckBuilder()
 
-  const buildLock = (options: LockOptions) =>
-    new CardLock(cardDatabaseServiceForTests, options)
+  const buildLock = (options: CardGameStateParams) => new CardGameState(options)
 
   beforeEach(() => {
-    MockDate.set(date)
+    jest.useFakeTimers().setSystemTime(date)
     lock = buildLock({
-      params: lockParamsFactory.build(),
-      data: lockDataFactory.build(),
+      params: cardConfigurationFactory.build(),
+      data: cardGameDataFactory.build(),
     })
   })
 
@@ -46,7 +47,7 @@ describe('Lock', () => {
 
     it('clones the deck', () => {
       expect(lock.getClonedDeck()).toMatchObject(
-        cardDeckBuilder.build({ red: 2, green: 1 }),
+        cardDeckBuilder.buildDeck({ red: 2, green: 1 }),
       )
     })
 
@@ -68,7 +69,7 @@ describe('Lock', () => {
     })
 
     it('sets the deck', () => {
-      const deck = cardDeckBuilder.build({ red: 5, green: 2, freeze: 1 })
+      const deck = cardDeckBuilder.buildDeck({ red: 5, green: 2, freeze: 1 })
       lock.setDeck(deck)
       expect(lock.getCard('red')).toBe(5)
       expect(lock.getCard('green')).toBe(2)
@@ -76,7 +77,7 @@ describe('Lock', () => {
     })
 
     it('does not set a deck without a key card', () => {
-      expect(() => lock.setDeck(cardDeckBuilder.build({ red: 5 }))).toThrow(
+      expect(() => lock.setDeck(cardDeckBuilder.buildDeck({ red: 5 }))).toThrow(
         'The deck must have at least one key card.',
       )
     })
@@ -88,19 +89,19 @@ describe('Lock', () => {
     })
 
     it('clamps the number of keys required', () => {
-      lock.params.nbKeysRequired = 5
-      lock.setDeck(cardDeckBuilder.build({ red: 5, green: 1 }))
-      expect(lock.params.nbKeysRequired).toBe(1)
+      lock.configuration.nbKeysRequired = 5
+      lock.setDeck(cardDeckBuilder.buildDeck({ red: 5, green: 1 }))
+      expect(lock.configuration.nbKeysRequired).toBe(1)
     })
 
     it('does not clamp the number of keys required when there is enough keys', () => {
-      lock.params.nbKeysRequired = 1
-      lock.setDeck(cardDeckBuilder.build({ red: 5, green: 5 }))
-      expect(lock.params.nbKeysRequired).toBe(1)
+      lock.configuration.nbKeysRequired = 1
+      lock.setDeck(cardDeckBuilder.buildDeck({ red: 5, green: 5 }))
+      expect(lock.configuration.nbKeysRequired).toBe(1)
     })
 
     it('draws a card', () => {
-      randomMockServiceForTests.setRandomWeightedIndex(0)
+      randomWeightedMock.mockReturnValue('red')
       const card = lock.drawCard()
       expect(card).toBe('red')
     })
@@ -164,7 +165,7 @@ describe('Lock', () => {
     })
 
     it('depends on the regularity', () => {
-      lock.params.regularity = 7200
+      lock.configuration.regularity = 7200
       lock.countAction(date)
       expect(lock.nextActionDate(date)).toEqual(
         dayjs(date).add(2, 'hour').toDate(),
@@ -180,8 +181,10 @@ describe('Lock', () => {
   describe('action dates for cumulative locks', () => {
     beforeEach(() => {
       lock = buildLock({
-        params: lockParamsFactory.build({ mode: RegularityMode.Cumulative }),
-        data: lockDataFactory.build(),
+        params: cardConfigurationFactory.build({
+          regularityMode: RegularityMode.Cumulative,
+        }),
+        data: cardGameDataFactory.build(),
       })
     })
 
@@ -205,7 +208,7 @@ describe('Lock', () => {
     })
 
     it('depends on the regularity', () => {
-      lock.params.regularity = 7200
+      lock.configuration.regularity = 7200
       lock.countAction(date)
       expect(lock.nextActionDate(date)).toEqual(
         dayjs(date).add(2, 'hour').toDate(),
@@ -251,7 +254,7 @@ describe('Lock', () => {
     })
 
     it('depends on regularity', () => {
-      lock.params.regularity = 7200
+      lock.configuration.regularity = 7200
       lock.countAction(date)
       const now = dayjs(date).add(1, 'hour').toDate()
       expect(lock.nbActionsRemaining(now)).toBe(0)
@@ -259,8 +262,8 @@ describe('Lock', () => {
 
     it('returns 0 action for frozen locks', () => {
       lock = buildLock({
-        params: lockParamsFactory.build(),
-        data: lockDataFactory.build({ freezeStartsAt: date }),
+        params: cardConfigurationFactory.build(),
+        data: cardGameDataFactory.build({ freezeStartsAt: date }),
       })
       expect(lock.nbActionsRemaining(date)).toBe(0)
     })
@@ -269,8 +272,10 @@ describe('Lock', () => {
   describe('nb actions remaining for cumulative locks', () => {
     beforeEach(() => {
       lock = buildLock({
-        params: lockParamsFactory.build({ mode: RegularityMode.Cumulative }),
-        data: lockDataFactory.build(),
+        params: cardConfigurationFactory.build({
+          regularityMode: RegularityMode.Cumulative,
+        }),
+        data: cardGameDataFactory.build(),
       })
     })
 
@@ -298,7 +303,7 @@ describe('Lock', () => {
     })
 
     it('depends on regularity', () => {
-      lock.params.regularity = 7200
+      lock.configuration.regularity = 7200
       lock.countAction(date)
       const now = dayjs(date).add(2, 'hour').toDate()
       expect(lock.nbActionsRemaining(now)).toBe(1)
@@ -321,8 +326,8 @@ describe('Lock', () => {
   describe('frozen locks', () => {
     it('is frozen', () => {
       lock = buildLock({
-        params: lockParamsFactory.build(),
-        data: lockDataFactory.build({ freezeStartsAt: date }),
+        params: cardConfigurationFactory.build(),
+        data: cardGameDataFactory.build({ freezeStartsAt: date }),
       })
       expect(lock.isFrozen(date)).toBe(true)
     })
@@ -333,8 +338,8 @@ describe('Lock', () => {
 
     it('is not frozen when the date is over', () => {
       lock = buildLock({
-        params: lockParamsFactory.build(),
-        data: lockDataFactory.build({
+        params: cardConfigurationFactory.build(),
+        data: cardGameDataFactory.build({
           freezeStartsAt: date,
           freezeEndsAt: dayjs(date).add(1, 'hour').toDate(),
         }),
@@ -355,8 +360,10 @@ describe('Lock', () => {
     describe('cumulative locks', () => {
       beforeEach(() => {
         lock = buildLock({
-          params: lockParamsFactory.build({ mode: RegularityMode.Cumulative }),
-          data: lockDataFactory.build(),
+          params: cardConfigurationFactory.build({
+            regularityMode: RegularityMode.Cumulative,
+          }),
+          data: cardGameDataFactory.build(),
         })
       })
 
@@ -378,7 +385,7 @@ describe('Lock', () => {
 
   describe('lock release', () => {
     beforeEach(() => {
-      lock.setDeck(cardDeckBuilder.build({ red: 5, green: 2 }))
+      lock.setDeck(cardDeckBuilder.buildDeck({ red: 5, green: 2 }))
     })
 
     it('cannot be released', () => {
@@ -397,13 +404,9 @@ describe('Lock', () => {
     })
 
     it('can be released if one key is found', () => {
-      lock.params.nbKeysRequired = 1
+      lock.configuration.nbKeysRequired = 1
       lock.pickCard(date, 'green')
       expect(lock.canBeReleased()).toBe(true)
     })
-  })
-
-  afterEach(() => {
-    MockDate.reset()
   })
 })

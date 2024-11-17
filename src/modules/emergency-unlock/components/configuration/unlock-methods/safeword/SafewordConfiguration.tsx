@@ -1,4 +1,4 @@
-import { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
+import type { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
 import FormRadioGroup from '@/modules/ui/components/inputs/FormRadioGroup'
 import {
   Divider,
@@ -12,8 +12,7 @@ import { useId } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import SafewordInput from './SafewordInput'
-import { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
-import { userCanSeeSafewordInput } from '@/modules/emergency-unlock/models/emergencyUnlockConfiguration'
+import type { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
 
 type Props = {
   form: UseFormReturn<EmergencyUnlockConfigurationForm>

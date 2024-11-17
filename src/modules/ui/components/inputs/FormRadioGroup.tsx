@@ -1,5 +1,5 @@
 import { Radio, RadioGroup } from '@mui/joy'
-import type { ComponentProps } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import type { Control, FieldValues, Path } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
@@ -11,13 +11,21 @@ type Props<T extends FieldValues> = Omit<
   name: Path<T>
 }
 
-const findRadioValues = (children: any) => {
-  const radioValues: any[] = []
-  for (const child of [children].flat(Infinity)) {
-    if (child.type === Radio) {
+type Children = {
+  type: unknown
+  props: {
+    children: ReactNode
+    value?: string
+  }
+}
+
+const findRadioValues = (children?: ReactNode) => {
+  const radioValues: string[] = []
+  for (const child of [children as Children].flat(Infinity)) {
+    if (child?.type === Radio && child?.props?.value !== undefined) {
       radioValues.push(child.props.value)
-    } else if (child.props?.children) {
-      radioValues.push(...findRadioValues(child.props?.children))
+    } else if (child?.props?.children) {
+      radioValues.push(...findRadioValues(child?.props?.children))
     }
   }
   return radioValues

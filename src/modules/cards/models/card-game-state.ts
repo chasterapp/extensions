@@ -1,11 +1,17 @@
-import dayjs from 'dayjs'
-import { RegularityMode } from './regularity-mode'
-import { CardDeckBuilder } from '@/modules/cards/models/card-deck-builder'
 import { getCard } from '@/modules/cards/lib/card-manager'
 import type { CardConfiguration } from '@/modules/cards/models/card-configuration'
 import type { CardDeck } from '@/modules/cards/models/card-deck'
-import type { PlayedCard } from '@/modules/cards/models/played-card'
+import { CardDeckBuilder } from '@/modules/cards/models/card-deck-builder'
 import type { CardType } from '@/modules/cards/models/card-type'
+import type { PlayedCard } from '@/modules/cards/models/played-card'
+import dayjs from 'dayjs'
+import type { CardGameData } from './card-game-data'
+import { RegularityMode } from './regularity-mode'
+
+export type CardGameStateParams = {
+  params: CardConfiguration
+  data: CardGameData
+}
 
 export class CardGameState {
   /**
@@ -58,7 +64,7 @@ export class CardGameState {
    */
   private nbActionsSinceLastReset: number
 
-  constructor(options: LockOptions) {
+  constructor(options: CardGameStateParams) {
     // Set params
     this.configuration = options.params
     this.hand = options.data.hand
@@ -71,7 +77,7 @@ export class CardGameState {
     this.nbActionsSinceLastReset = options.data.nbActionsSinceLastReset
 
     // Set the deck
-    this.deck = new CardDeckBuilder(this.database).build(options.data.deck)
+    this.deck = new CardDeckBuilder().buildDeck(options.data.deck)
   }
 
   /**
@@ -81,7 +87,7 @@ export class CardGameState {
     return this.deck.size
   }
 
-  get data(): LockData {
+  get data(): CardGameData {
     return {
       deck: this.deck.clone().raw(),
       freezeEndsAt: this.freezeEndsAt,

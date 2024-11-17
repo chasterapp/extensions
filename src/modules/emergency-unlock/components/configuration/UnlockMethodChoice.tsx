@@ -10,7 +10,7 @@ import {
 import { t } from 'i18next'
 import { useId } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
-import { EmergencyUnlockConfigurationForm } from '../../types/emergencyUnlockConfiguration'
+import type { EmergencyUnlockConfigurationForm } from '../../types/emergencyUnlockConfiguration'
 import { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
 
 type Props = {
@@ -119,7 +119,7 @@ const ForWearer = ({ form: { setValue, watch } }: Pick<Props, 'form'>) => {
 }
 
 const UnlockMethodChoice = ({ role, form }: Props) =>
-  role === 'keyholder' ? (
+  role === PartnerConfigurationRoleEnum.Keyholder ? (
     <ForKeyholder form={form} />
   ) : (
     <ForWearer form={form} />

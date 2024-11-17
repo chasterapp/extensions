@@ -40,3 +40,4 @@ next-env.d.ts
 /playwright/.cache/
 
 .env
+junit.xml

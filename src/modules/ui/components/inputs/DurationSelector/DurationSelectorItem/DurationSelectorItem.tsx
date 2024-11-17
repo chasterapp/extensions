@@ -1,5 +1,4 @@
 import { Box, Stack } from '@mui/joy'
-import LongPressButton from '@/modules/ui/components/inputs/LongPressButton'
 import './DurationSelectorItem.css'
 import { AddRounded, RemoveRounded } from '@mui/icons-material'
 import RepeatableButton from '@/modules/ui/components/inputs/RepeatableButton'

@@ -1,9 +1,9 @@
+import { Radio } from '@mui/joy'
 import '@testing-library/jest-dom'
 import { act, render, screen } from '@testing-library/react'
+import type { PropsWithChildren } from 'react'
+import { useForm } from 'react-hook-form'
 import FormRadioGroup from './FormRadioGroup'
-import { Radio } from '@mui/joy'
-import { FormProvider, useForm } from 'react-hook-form'
-import { PropsWithChildren } from 'react'
 
 const Form = ({ children }: PropsWithChildren) => {
   const methods = useForm<{ test: string }>({

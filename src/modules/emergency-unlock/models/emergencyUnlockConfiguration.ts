@@ -1,12 +1,12 @@
-import {
+import type {
   EmergencyUnlockConfiguration,
   EmergencyUnlockConfigurationForm,
-  emergencyUnlockConfigurationSchema,
 } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
+import { emergencyUnlockConfigurationSchema } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
 import { defaultConfiguration } from '@/modules/emergency-unlock/data/defaultConfiguration'
 import { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
 
-export const parseConfiguration = (config: any) => {
+export const parseConfiguration = (config: unknown) => {
   try {
     return emergencyUnlockConfigurationSchema.parse(config)
   } catch (error) {
@@ -41,8 +41,10 @@ export const userCanSeeNbRequiredKeysInput = ({
   wearerCanChooseNbRequiredKeys: boolean
   role: PartnerConfigurationRoleEnum
 }) =>
-  (role === 'wearer' && wearerCanChooseNbRequiredKeys) ||
-  (role === 'keyholder' && !wearerCanChooseNbRequiredKeys)
+  (role === PartnerConfigurationRoleEnum.Wearer &&
+    wearerCanChooseNbRequiredKeys) ||
+  (role === PartnerConfigurationRoleEnum.Keyholder &&
+    !wearerCanChooseNbRequiredKeys)
 
 export const userCanSeeSafewordInput = ({
   wearerCanChooseSafeword,
@@ -51,8 +53,8 @@ export const userCanSeeSafewordInput = ({
   wearerCanChooseSafeword: boolean
   role: PartnerConfigurationRoleEnum
 }) =>
-  (role === 'wearer' && wearerCanChooseSafeword) ||
-  (role === 'keyholder' && !wearerCanChooseSafeword)
+  (role === PartnerConfigurationRoleEnum.Wearer && wearerCanChooseSafeword) ||
+  (role === PartnerConfigurationRoleEnum.Keyholder && !wearerCanChooseSafeword)
 
 export const formToConfiguration = ({
   form,

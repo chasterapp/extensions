@@ -1,8 +1,8 @@
 import { useTranslation } from '@/app/i18n/client'
 import { userCanSeeNbRequiredKeysInput } from '@/modules/emergency-unlock/models/emergencyUnlockConfiguration'
-import { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
+import type { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
 import FormInput from '@/modules/ui/components/inputs/FormInput'
-import { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
+import type { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
 import type { UseFormReturn } from 'react-hook-form'
 
 type Props = {

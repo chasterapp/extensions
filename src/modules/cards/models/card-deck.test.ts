@@ -1,14 +1,17 @@
-import { CardDeckBuilder } from 'modules/card-core/models/card/card-deck-builder'
-import { cardDatabaseServiceForTests } from 'modules/card-database/tests/data/card-database-for-tests'
-import { randomMockServiceForTests } from 'modules/random/tests/data/random-mock-for-tests'
-import { CardDeck } from './card-deck'
+import { randomWeighted } from '@/modules/base/lib/random'
+import type { CardDeck } from './card-deck'
+import { CardDeckBuilder } from './card-deck-builder'
+
+jest.mock('@/modules/base/lib/random')
+
+const randomWeightedMock = randomWeighted as jest.Mock
 
 describe('CardDeck', () => {
-  const builder = new CardDeckBuilder(cardDatabaseServiceForTests)
+  const builder = new CardDeckBuilder()
 
   describe('build deck', () => {
     it('can build a deck', () => {
-      const deck = builder.build({ red: 2, green: 1 })
+      const deck = builder.buildDeck({ red: 2, green: 1 })
       expect(deck.size).toBe(3)
       expect(deck.get('red')).toBe(2)
       expect(deck.get('green')).toBe(1)
@@ -16,7 +19,7 @@ describe('CardDeck', () => {
   })
 
   describe('empty deck', () => {
-    const deck = builder.build({})
+    const deck = builder.buildDeck({})
 
     it('is empty', () => {
       expect(deck.size).toBe(0)
@@ -31,7 +34,7 @@ describe('CardDeck', () => {
     let deck: CardDeck
 
     beforeEach(() => {
-      deck = builder.build({ red: 2 })
+      deck = builder.buildDeck({ red: 2 })
     })
 
     it('has one card', () => {
@@ -39,7 +42,7 @@ describe('CardDeck', () => {
     })
 
     it('can draw a card', () => {
-      randomMockServiceForTests.setRandomWeightedIndex(0)
+      randomWeightedMock.mockReturnValueOnce('red')
       const card = deck.draw()
       expect(card).toBe('red')
       expect(deck.size).toBe(2)
@@ -55,7 +58,7 @@ describe('CardDeck', () => {
     let deck: CardDeck
 
     beforeEach(() => {
-      deck = builder.build({ red: 2, green: 1 })
+      deck = builder.buildDeck({ red: 2, green: 1 })
     })
 
     it('has three cards', () => {

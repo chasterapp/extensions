@@ -4,6 +4,7 @@ const nextConfig = {
     instrumentationHook: true,
   },
   reactStrictMode: false,
+  output: 'standalone',
 }
 
 export default nextConfig

@@ -7,7 +7,10 @@ import {
   parseConfiguration,
 } from '@/modules/emergency-unlock/models/emergencyUnlockConfiguration'
 import type { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
-import type { PartnerConfigurationForPublic } from '@chasterapp/chaster-js'
+import {
+  PartnerConfigurationRoleEnum,
+  type PartnerConfigurationForPublic,
+} from '@chasterapp/chaster-js'
 import { Divider, Stack, Typography } from '@mui/joy'
 import { useForm } from 'react-hook-form'
 import DisclaimerAlert from './DisclaimerAlert'
@@ -43,7 +46,7 @@ const Configuration = ({ partnerConfiguration, token }: Props) => {
   return (
     <Stack p={2} gap={2}>
       <Typography>
-        {role === 'keyholder'
+        {role === PartnerConfigurationRoleEnum.Keyholder
           ? t('emergency_unlock.description_for_keyholder')
           : t('emergency_unlock.description_for_wearer')}
       </Typography>

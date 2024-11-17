@@ -12,7 +12,7 @@ const DisclaimerAlert = ({ role }: Props) => {
   return (
     <Alert color="warning">
       <Box>
-        {role === 'keyholder'
+        {role === PartnerConfigurationRoleEnum.Keyholder
           ? t('emergency_unlock.disclaimer_alert_for_keyholder')
           : t('emergency_unlock.disclaimer_alert_for_wearer')}
         <br />

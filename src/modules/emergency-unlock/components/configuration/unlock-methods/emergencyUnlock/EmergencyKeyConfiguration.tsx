@@ -1,8 +1,8 @@
 import EmergencyKeyItemCard from '@/modules/emergency-unlock/components/configuration/EmergencyKeyItemCard'
 import SelectNumberOfRequiredKeys from '@/modules/emergency-unlock/components/configuration/unlock-methods/emergencyUnlock/SelectNumberOfRequiredKeys'
-import { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
+import type { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
 import FormRadioGroup from '@/modules/ui/components/inputs/FormRadioGroup'
-import { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
+import type { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
 import {
   Divider,
   FormControl,

@@ -1,4 +1,4 @@
-import { EmergencyUnlockConfiguration } from '../types/emergencyUnlockConfiguration'
+import type { EmergencyUnlockConfiguration } from '../types/emergencyUnlockConfiguration'
 
 export const defaultConfiguration: EmergencyUnlockConfiguration = {
   emergencyKey: {

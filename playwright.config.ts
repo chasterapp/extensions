@@ -70,8 +70,9 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run start',
+    command: 'PORT=3011 node .next/standalone/server.js',
     url: 'http://127.0.0.1:3011',
     reuseExistingServer: !process.env.CI,
+    stdout: 'pipe',
   },
 })
