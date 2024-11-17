@@ -1,0 +1,8 @@
+namespace: aaron-extensions-preprod
+
+ingress:
+  host: "extensions-preprod.chaster.app"
+
+chaster:
+  apiUrl: "https://preprod-api.chaster.app"
+  apiClientId: chaster-extensions-553587
