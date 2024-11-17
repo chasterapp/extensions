@@ -86,7 +86,6 @@ jobs:
     timeout-minutes: 10
     needs: build
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -95,6 +94,9 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version-file: '.nvmrc'
+
+    - name: Copy environment variables
+      run: cp .env.sample .env
 
     - name: Install dependencies
       run: npm ci
@@ -112,12 +114,20 @@ jobs:
         path: playwright-report/
         retention-days: 30
 
+    - name: Publish Test Report
+      uses: mikepenz/action-junit-report@v5
+      if: success() || failure()
+      with:
+        report_paths: junit-playwright.xml
+
   deploy-preprod:
     name: Deploy to preprod
     if: github.ref == 'refs/heads/main'
     needs: [build]
     runs-on: ubuntu-latest
     container: dtzar/helm-kubectl
+    env:
+      KUBECONFIG: "/tmp/config"
     steps:
     - name: Checkout main
       uses: actions/checkout@v3
@@ -126,4 +136,4 @@ jobs:
       run: echo "${{ secrets.K8S_KUBECONFIG }}" > /tmp/config
 
     - name: Deploy on environment
-      run: ./k8s/deploy.sh preprod sha-${{ inputs.sha }}
+      run: ./k8s/deploy.sh preprod sha-${{ github.sha }}
