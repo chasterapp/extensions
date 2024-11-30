@@ -24,7 +24,7 @@ export const configurationToForm = (
     wearerCanChooseNbRequiredKeys:
       config.emergencyKey.wearerCanChooseNbRequiredKeys,
     wearerCanChooseSafeword: config.safeword.wearerCanChooseSafeword,
-    nbRequiredKeys: config.emergencyKey.nbRequiredKeys || 1,
+    nbRequiredKeys: config.emergencyKey.nbRequiredKeys?.toString() || '1',
     safeword: config.safeword.safeword || '',
   }
 }

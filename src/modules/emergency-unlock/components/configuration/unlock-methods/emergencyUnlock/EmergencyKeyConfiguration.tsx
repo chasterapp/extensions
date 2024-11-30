@@ -1,3 +1,4 @@
+import { useTranslation } from '@/app/i18n/client'
 import EmergencyKeyItemCard from '@/modules/emergency-unlock/components/configuration/EmergencyKeyItemCard'
 import SelectNumberOfRequiredKeys from '@/modules/emergency-unlock/components/configuration/unlock-methods/emergencyUnlock/SelectNumberOfRequiredKeys'
 import type { EmergencyUnlockConfigurationForm } from '@/modules/emergency-unlock/types/emergencyUnlockConfiguration'
@@ -13,7 +14,6 @@ import {
 } from '@mui/joy'
 import { useId } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
 
 type Props = {
   form: UseFormReturn<EmergencyUnlockConfigurationForm>

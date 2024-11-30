@@ -23,6 +23,10 @@ module.exports = {
             disallowTypeAnnotations: false,
           },
         ],
+        '@typescript-eslint/no-misused-promises': [
+          'error',
+          { checksVoidReturn: false },
+        ],
         '@next/next/no-img-element': 'off',
       },
     },

@@ -13,7 +13,7 @@ import { getOptions, languages } from './settings'
 
 const runsOnServerSide = typeof window === 'undefined'
 
-i18next
+export const i18nPromise = i18next
   .use(initReactI18next)
   .use(LanguageDetector)
   .use(
@@ -74,3 +74,5 @@ export function useTranslation(
   }
   return ret
 }
+
+export default i18next

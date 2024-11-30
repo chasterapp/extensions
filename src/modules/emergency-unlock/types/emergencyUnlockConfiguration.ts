@@ -30,6 +30,6 @@ export type EmergencyUnlockConfigurationForm = {
   safewordAllowed: boolean
   wearerCanChooseNbRequiredKeys: boolean
   wearerCanChooseSafeword: boolean
-  nbRequiredKeys: number
+  nbRequiredKeys: string
   safeword: string
 }
