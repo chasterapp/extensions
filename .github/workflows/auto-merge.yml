@@ -2,25 +2,25 @@ name: Auto-merge
 on: pull_request_target
 
 jobs:
-  dependabot:
+  automerge:
     runs-on: ubuntu-latest
-      if: |
+    if: |
           (github.actor == 'dependabot[bot]') ||
           (github.actor == 'vincefox1' && contains(github.event.pull_request.title, 'build(weblate)'))
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Generate a token
-        id: generate-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ vars.CHASTER_BOT_GITHUB_APP_ID }}
-          private-key: ${{ secrets.CHASTER_BOT_GITHUB_APP_PRIVATE_KEY }}
+    - name: Generate a token
+      id: generate-token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ vars.CHASTER_BOT_GITHUB_APP_ID }}
+        private-key: ${{ secrets.CHASTER_BOT_GITHUB_APP_PRIVATE_KEY }}
 
-      - name: Approve and enable auto-merge
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-        run: |
-          gh pr review --approve ${{ github.event.number }}
-          gh pr merge --auto --squash --delete-branch ${{ github.event.number }}
+    - name: Approve and enable auto-merge
+      env:
+        GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+      run: |
+        gh pr review --approve ${{ github.event.number }}
+        gh pr merge --auto --squash --delete-branch ${{ github.event.number }}
