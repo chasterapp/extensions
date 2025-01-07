@@ -66,6 +66,9 @@ jobs:
 
     - name: Run tests
       run: npm run test:ci
+  
+    - name: Type check
+      run: npm run typecheck
 
     - name: Upload coverage reports
       uses: actions/upload-artifact@v4
