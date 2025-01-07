@@ -6,6 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Generate a token
         id: generate-token
         uses: actions/create-github-app-token@v1
