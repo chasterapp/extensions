@@ -1,0 +1,24 @@
+name: Dependabot automerge
+on: pull_request
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.CHASTER_BOT_GITHUB_APP_ID }}
+          private-key: ${{ secrets.CHASTER_BOT_GITHUB_APP_PRIVATE_KEY }}
+
+      - name: Approve
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: gh pr review --approve ${{ github.event.number }}
+
+      - name: Merge
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: gh pr merge --auto --squash --delete-branch ${{ github.event.number }}
