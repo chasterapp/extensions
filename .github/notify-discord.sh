@@ -43,7 +43,20 @@ fi
 
 printf "$MESSAGE"
 
-JSON_FMT="{\"embeds\":[{\"title\": \"$TITLE\", \"description\": \"$MESSAGE\", \"fields\": [{\"name\": \"🖥️ Build\", \"value\": \"**[Build summary](https://github.com/chasterapp/extensions/actions/runs/$RUN_ID)**\"}]}]}"
+JSON_FMT=$(jq -n \
+  --arg title "$TITLE" \
+  --rawfile message <(echo -e "$MESSAGE") \
+  --arg run_id "$RUN_ID" \
+  '{
+    embeds: [{
+      title: $title,
+      description: $message,
+      fields: [{
+        name: "🖥️ Build",
+        value: "**[Build summary](https://github.com/chasterapp/extensions/actions/runs/\($run_id))**"
+      }]
+    }]
+  }')
 
 echo $JSON_FMT
 
