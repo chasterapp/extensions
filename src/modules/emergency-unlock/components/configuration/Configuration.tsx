@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form'
 import DisclaimerAlert from './DisclaimerAlert'
 import { useSaveCapability } from '@/modules/base/hooks/useSaveCapability'
 import { updateConfiguration } from '@/modules/cards/actions/updateConfiguration'
+import { useMemo } from 'react'
 
 type Props = {
   partnerConfiguration: PartnerConfigurationForPublic
@@ -25,10 +26,15 @@ type Props = {
 const Configuration = ({ partnerConfiguration, token }: Props) => {
   const { t } = useTranslation()
   const role = partnerConfiguration.role
+  const defaultValues = useMemo(
+    () =>
+      configurationToForm(
+        parseConfiguration(partnerConfiguration.config, role),
+      ),
+    [partnerConfiguration.config, role],
+  )
   const form = useForm<EmergencyUnlockConfigurationForm>({
-    defaultValues: configurationToForm(
-      parseConfiguration(partnerConfiguration.config),
-    ),
+    defaultValues,
   })
 
   useSaveCapability({
@@ -37,7 +43,6 @@ const Configuration = ({ partnerConfiguration, token }: Props) => {
         form: form.getValues(),
         role,
       })
-      console.log(JSON.stringify(configuration))
 
       await updateConfiguration({ token, configuration })
     },

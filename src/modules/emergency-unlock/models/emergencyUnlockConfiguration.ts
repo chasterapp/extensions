@@ -6,13 +6,27 @@ import { emergencyUnlockConfigurationSchema } from '@/modules/emergency-unlock/t
 import { defaultConfiguration } from '@/modules/emergency-unlock/data/defaultConfiguration'
 import { PartnerConfigurationRoleEnum } from '@chasterapp/chaster-js'
 
-export const parseConfiguration = (config: unknown) => {
+export const parseConfiguration = (
+  config: unknown,
+  role: PartnerConfigurationRoleEnum,
+) => {
+  let parsedConfig: EmergencyUnlockConfiguration
+
   try {
-    return emergencyUnlockConfigurationSchema.parse(config)
+    parsedConfig = emergencyUnlockConfigurationSchema.parse(config)
   } catch (error) {
     console.error(error)
-    return defaultConfiguration
+    parsedConfig = defaultConfiguration
   }
+
+  if (role === PartnerConfigurationRoleEnum.Wearer) {
+    if (parsedConfig.emergencyKey.allowed && parsedConfig.safeword.allowed) {
+      // wearer can only choose one unlock method
+      parsedConfig.emergencyKey.allowed = false
+    }
+  }
+
+  return parsedConfig
 }
 
 export const configurationToForm = (

@@ -42,22 +42,22 @@ const ForKeyholder = ({ form: { control } }: Pick<Props, 'form'>) => {
           <FormCheckbox
             overlay
             control={control}
-            name="emergencyKeyAllowed"
-            label={t('emergency_unlock.emergency_keys')}
+            name="safewordAllowed"
+            label={t('emergency_unlock.safeword')}
           />
           <FormHelperText>
-            {t('emergency_unlock.emergency_keys_description_for_keyholder')}
+            {t('emergency_unlock.safeword_description_for_keyholder')}
           </FormHelperText>
         </FormControl>
         <FormControl>
           <FormCheckbox
             overlay
             control={control}
-            name="safewordAllowed"
-            label={t('emergency_unlock.safeword')}
+            name="emergencyKeyAllowed"
+            label={t('emergency_unlock.emergency_keys')}
           />
           <FormHelperText>
-            {t('emergency_unlock.safeword_description_for_keyholder')}
+            {t('emergency_unlock.emergency_keys_description_for_keyholder')}
           </FormHelperText>
         </FormControl>
       </Stack>
@@ -95,21 +95,21 @@ const ForWearer = ({ form: { setValue, watch } }: Pick<Props, 'form'>) => {
           <FormControl>
             <Radio
               overlay
-              value="emergency_key"
-              label={t('emergency_unlock.emergency_keys')}
-            />
-            <FormHelperText>
-              {t('emergency_unlock.emergency_keys_description_for_wearer')}
-            </FormHelperText>
-          </FormControl>
-          <FormControl>
-            <Radio
-              overlay
               value="safeword"
               label={t('emergency_unlock.safeword')}
             />
             <FormHelperText>
               {t('emergency_unlock.safeword_description_for_wearer')}
+            </FormHelperText>
+          </FormControl>
+          <FormControl>
+            <Radio
+              overlay
+              value="emergency_key"
+              label={t('emergency_unlock.emergency_keys')}
+            />
+            <FormHelperText>
+              {t('emergency_unlock.emergency_keys_description_for_wearer')}
             </FormHelperText>
           </FormControl>
         </Stack>
