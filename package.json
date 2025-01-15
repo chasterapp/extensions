@@ -37,7 +37,7 @@
     "accept-language": "^3.0.20",
     "axios": "^1.7.9",
     "class-validator": "^0.14.1",
-    "dayjs": "^1.11.11",
+    "dayjs": "^1.11.13",
     "fishery": "^2.2.2",
     "husky": "^9.1.7",
     "i18next": "^24.2.1",
