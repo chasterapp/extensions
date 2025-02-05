@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@chasterapp/chaster-js": "^0.38.0",
-    "@commitlint/cli": "^19.6.1",
+    "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
