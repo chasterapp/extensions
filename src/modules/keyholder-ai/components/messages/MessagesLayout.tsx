@@ -38,7 +38,6 @@ export function MessagesLayout({ conversationId }: Props) {
   const { mutate: sendMessage, isPending: isSending } = useSendMessage({
     conversationId: conversation.id,
     userId: userId,
-    sessionId: session.sessionId,
     onSuccess: () => {
       generateAiResponse()
     },
