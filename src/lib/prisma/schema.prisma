@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ChatbotKeyholder {
+  id              String        @id @default(cuid())
+  name            String
+  description     String
+  avatarUrl       String
+  kinks           String[]
+  personalityTraits String[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  conversations   ChatbotConversation[]
+}
+
+model ChatbotConversation {
+  id          String    @id @default(cuid())
+  keyholderId String
+  keyholder   ChatbotKeyholder @relation(fields: [keyholderId], references: [id])
+  sessionId   String    // Chaster session ID
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  messages    ChatbotMessage[]
+}
+
+model ChatbotMessage {
+  id             String      @id @default(cuid())
+  conversationId String
+  conversation   ChatbotConversation @relation(fields: [conversationId], references: [id])
+  content        String
+  userId         String    // Chaster user ID
+  actions        Json?     // Store parsed actions from AI response
+  createdAt      DateTime    @default(now())
+} 

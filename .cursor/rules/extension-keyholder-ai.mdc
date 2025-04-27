@@ -1,0 +1,97 @@
+---
+description: 
+globs: **/keyholder-ai/**
+alwaysApply: false
+---
+PROJECT : KEYHOLDER AI
+
+We're going to develop a keyholder chatbot extension for Chaster (who allows developers to create extensions). this includes :
+- a home page to list all AI keyholder profiles (name, description, image, kinks etc.)
+- a left menu to list all conversations
+- a main area to display the conversation, and a chatbot interface to chat with the keyholder
+- in addition to chatting, the keyholder will be able to do actions (choose to do actions).
+  - examples: add or remove time, add keys, ask the user to do actions.
+  - the list of actions will be hardcoded at first.
+
+our project is in nextjs, prisma and postgres for storage.
+we use MUI Joy UI for the design.
+use ai sdk to call the AI.
+
+TASK LIST :
+
+1. **AI Keyholder Profiles Page (Home Page)**
+   - Create database schema for AI keyholder profiles
+     - Fields: name, description, avatar image, kinks, personality traits
+   - Implement UI grid/list view of keyholder profiles
+   - Add profile cards with avatar, name, and brief description
+   - Implement profile detail view/modal
+   - Add filtering/search functionality for profiles
+
+2. **Navigation & Layout**
+   - Implement main layout structure
+   - Create left sidebar for conversations
+   - Design responsive layout that works on mobile/desktop
+   - Add navigation between profiles and chat views
+
+3. **Conversations System**
+   - Design database schema for conversations
+     - Store chat history
+     - Link conversations to specific AI profiles
+     - Store user preferences and context
+   - Implement conversation list in left sidebar
+     - Show recent conversations
+     - Display unread messages indicators
+     - Add timestamp and last message preview
+
+4. **Chat Interface**
+   - Create chat UI components
+     - Message bubbles for user and AI
+     - Input field with send button
+     - Loading states and typing indicators
+   - Implement message history display
+   - Add support for markdown/formatting in messages
+   - Implement real-time updates
+   - Add scroll management and message pagination
+
+5. **AI Integration**
+   - Set up AI SDK integration
+   - Design prompt engineering system
+   - Implement context management for conversations
+   - Create personality templates for different keyholders
+   - Add rate limiting and error handling
+   - Implement streaming responses
+
+6. **Action System**
+   - Create action framework
+     - Define standard action types (add/remove time, add keys, etc.)
+     - Create action execution system
+   - Implement UI for action triggers
+   - Add action confirmation dialogs
+   - Create action history/logging system
+   - Implement Chaster API integration for actions
+
+7. **Database & Backend**
+   - Set up Prisma schema
+     - User profiles
+     - Conversations
+     - Messages
+     - Actions history
+     - AI profiles
+   - Create necessary API routes
+   - Implement data validation
+   - Add error handling
+   - Set up database migrations
+
+8. **Authentication & Authorization**
+   - Integrate Chaster authentication
+   - Implement session management
+   - Add user permission checks
+   - Handle API authentication
+
+9. **UI/UX Refinements**
+   - Implement MUI Joy UI components
+   - Create consistent styling system
+   - Add loading states and animations
+   - Implement error states and notifications
+   - Add empty states for lists
+   - Create skeleton loaders

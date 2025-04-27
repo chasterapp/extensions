@@ -39,5 +39,7 @@ next-env.d.ts
 /blob-report/
 /playwright/.cache/
 
-.env
 junit*.xml
+
+# prisma
+src/lib/prisma/client

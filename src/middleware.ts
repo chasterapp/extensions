@@ -1,26 +1,18 @@
-import acceptLanguage from 'accept-language'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { cookieName, fallbackLng, languages } from './app/i18n/settings'
+import { languageMiddleware } from './modules/server/middlewares/language'
 
-acceptLanguage.languages(languages)
-
-export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest).*)',
-  ],
-}
+export const CURRENT_PATH_HEADER = 'x-current-path'
 
 export function middleware(req: NextRequest) {
-  let lng
-  if (!lng) lng = acceptLanguage.get(req.headers.get('Accept-Language'))
-  if (!lng) lng = fallbackLng
-
-  if (!req.nextUrl.pathname.startsWith('/_next')) {
-    const response = NextResponse.next()
-    if (lng) response.cookies.set(cookieName, lng)
-    return response
+  if (req.nextUrl.pathname.startsWith('/_next')) {
+    return NextResponse.next()
   }
 
-  return NextResponse.next()
+  const res = NextResponse.next()
+  languageMiddleware(req, res)
+
+  res.headers.set(CURRENT_PATH_HEADER, req.nextUrl.pathname)
+
+  return res
 }

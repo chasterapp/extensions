@@ -1,0 +1,23 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Chaster Extensions Product Specifications
+
+## Overview
+This repository serves as a central hub for developing and maintaining extensions for the Chaster platform. Chaster is a keyholding application for chastity wearers and keyholders, and this repository aims to provide a collaborative space for developers to create and improve extensions that enhance the Chaster experience.
+
+## Initial Extensions
+The repository will initially focus on three core extensions:
+1. **Card Game Extension**: A game-based extension that adds an element of chance and entertainment to the lock experience
+2. **Emergency Unlock Extension**: A safety-focused extension that provides controlled emergency access options
+3. **Keyholder AI Chat Extension**: An AI-powered communication system that simulates interaction with a keyholder
+
+## Technical Foundation
+All extensions in this repository will be built using the official Chaster Extensions API, ensuring compatibility and proper integration with the Chaster platform. The API provides endpoints for:
+- Extension session management
+- Lock configuration
+- User authentication
+- Real-time updates via webhooks
+

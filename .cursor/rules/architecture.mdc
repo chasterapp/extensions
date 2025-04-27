@@ -1,0 +1,159 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Chaster Extensions Architecture Rules
+
+## Project Structure
+- The project follows a Next.js application structure with TypeScript
+- Core code is organized in the `src` directory with the following key components:
+  - `app/`: Next.js app router pages and layouts
+  - `modules/`: Feature-specific modules for each extension
+  - `lib/`: External libraries exports (dayjs, prisma)
+  - `constants/`: Application-wide constants and configuration
+  - `mocks/`: Test mock data and utilities
+
+## Extension Architecture
+Each extension must follow these architectural patterns:
+
+### 1. Module Organization
+- Each extension should be a self-contained module in `src/modules/`
+- Never write feature code in `app/`, app router is only used to route to the *Entrypoint.tsx component extracting the params in props.
+- Module structure:
+  ```
+  modules/
+    extension-name/
+      actions/        # Next.js server actions (never called directly)
+      components/     # React components with specific patterns:
+        *Entrypoint.tsx  # Used only from Next.js app router files
+                         # Handles React Query data fetching
+                         # Calls corresponding *Layout.tsx
+        *Layout.tsx      # Feature entrypoint with all data passed via props
+      domain/         # Domain related code
+        mappers/      # Business logic for mapping server data to UI data
+        models/       # TypeScript types, models, and entity representations
+      queries/        # React Query hook wrappers
+      tests/          # Integration tests testing the whole extension
+      index.ts        # Public API exports
+  ```
+
+### Component Architecture Guidelines:
+- *Entrypoint.tsx files:
+  - Should only be imported from Next.js app router files (index.tsx)
+  - Must handle all React Query data fetching
+  - Should pass fetched data to corresponding *Layout.tsx
+- *Layout.tsx files:
+  - Serve as the feature entrypoint
+  - Receive all data via props
+  - Handle the main layout and composition of the feature
+  - Should not contain data fetching logic
+
+### 2. API Integration
+- All Chaster API calls must use the following pattern:
+  ```typescript
+  import { createApiInstance } from '@/modules/network/helpers/createApiInstance'
+  import { PartnerExtensionsApi } from '@chasterapp/chaster-js'
+
+  const response = await createApiInstance(PartnerExtensionsApi)
+    .getExtensionSession(sessionId)
+    .then(({ data }) => data)
+  ```
+- API calls must include proper error handling and type safety
+- Use the official Chaster Extensions API client
+- No services folder - API calls should be made directly in the relevant components or actions
+
+### 3. Form Management
+- Use React Hook Form with Zod validation for all forms, even simple ones
+- Follow this pattern for form implementation:
+  ```typescript
+  import { useForm } from 'react-hook-form'
+  import { zodResolver } from '@hookform/resolvers/zod'
+  import { z } from 'zod'
+
+  const formSchema = z.object({
+    // Define your schema here
+  })
+
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      // Define default values here
+    }
+  })
+  ```
+- Create reusable form components that integrate with React Hook Form
+- Implement proper error handling and validation feedback
+- Use controlled components with React Hook Form's register function
+
+### 4. State Management
+- Prefer local state management using `useState` for most cases
+- Only use state management libraries when absolutely necessary
+- If needed, use Zustand for global state management
+- Keep state as close as possible to where it's used
+- Follow React hooks best practices
+- Avoid premature optimization with state management libraries
+
+### 5. Component Architecture
+- Components should be functional and use hooks
+- Follow atomic design principles:
+  - Atoms: Basic UI elements
+  - Molecules: Combinations of atoms
+  - Organisms: Complex UI components
+  - Templates: Page layouts
+  - Pages: Complete views
+
+### 6. Testing Requirements
+- Each module must include:
+  - Unit and Component tests:
+    - Must be co-located with the files they test
+    - Example: `ConversationList.tsx` and `ConversationList.test.tsx`
+    - Test individual functions, components, and utilities
+  - Integration tests:
+    - Located in `/modules/extension-name/tests/`
+    - Test the entire extension/module functionality
+    - Verify interactions between components and services
+  - E2E tests:
+    - Located in `src/playwright/`
+    - Test critical user flows across the application
+    - Verify complete user journeys
+- Follow testing best practices:
+  - Use descriptive test names
+  - Keep tests focused and isolated
+  - Mock external dependencies
+  - Ensure proper test coverage
+  - Maintain test performance
+
+### 7. Security Guidelines
+- Never store sensitive data in client-side code
+- Implement proper authentication flows
+- Validate all user input
+- Follow Chaster's security best practices
+
+### 8. Performance Considerations
+- Implement proper code splitting
+- Use React.memo for expensive components
+- Optimize API calls with caching where appropriate
+- Follow Next.js performance best practices
+
+### 9. Documentation Requirements
+- Each module must include:
+  - README.md with setup and usage instructions
+  - API documentation for public interfaces
+  - TypeScript type documentation
+  - Example usage patterns
+
+### 10. Error Handling
+- Implement consistent error handling patterns
+- Use proper error boundaries
+- Provide meaningful error messages
+- Log errors appropriately
+
+## Verification Steps
+Before submitting code:
+1. Run all tests successfully
+2. Verify TypeScript compilation
+3. Check ESLint compliance
+4. Ensure proper documentation
+5. Verify security measures
+6. Test performance metrics

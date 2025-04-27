@@ -1,5 +1,5 @@
 import CardsConfigurationView from '@/modules/cards/views/CardsConfigurationView'
-import { getConfiguration } from '@/modules/init/actions/getConfiguration'
+import { getConfiguration } from '@/modules/extensions/actions/get-configuration'
 
 type Props = {
   params: {

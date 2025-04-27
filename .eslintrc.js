@@ -3,6 +3,7 @@ module.exports = {
   parserOptions: {
     project: ['tsconfig.json'],
   },
+  ignorePatterns: ['src/lib/prisma/client/**/*'],
   rules: {
     'prefer-template': 'error',
   },
