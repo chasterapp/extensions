@@ -1,0 +1,6 @@
+components:
+  backend:
+    host: extensions-preprod.chaster.app
+    env:
+      CHASTER_API_URL: "https://preprod-api.chaster.app"
+      CHASTER_API_CLIENT_ID: chaster-extensions-553587

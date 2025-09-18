@@ -41,7 +41,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
-        push: ${{ github.event_name != 'pull_request' }}
+        push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: type=gha
@@ -114,25 +114,6 @@ jobs:
       if: success() || failure()
       with:
         report_paths: junit-playwright.xml
-
-  deploy-preprod:
-    name: Deploy to preprod
-    timeout-minutes: 5
-    if: github.ref == 'refs/heads/main'
-    needs: [build]
-    runs-on: ubuntu-latest
-    container: dtzar/helm-kubectl
-    env:
-      KUBECONFIG: "/tmp/config"
-    steps:
-    - name: Checkout main
-      uses: actions/checkout@v3
-
-    - name: Export Kubernetes secret
-      run: echo "${{ secrets.K8S_KUBECONFIG }}" > /tmp/config
-
-    - name: Deploy on environment
-      run: ./k8s/deploy.sh preprod sha-${{ github.sha }}
 
   notify:
     name: Notify build

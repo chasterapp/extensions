@@ -1,0 +1,8 @@
+nameOverride: extensions
+components:
+  backend:
+    enabled: true
+    image:
+      repository: ghcr.io/chasterapp/chaster-extensions
+    ingress:
+      path: "/"
